@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="icon" href="Logo TuneWave.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Общие стили */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f7fc;
+        }
+
+        /* Стили для шапки и навигации */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #565db3;
+            padding: 15px 20px;
+            color: white;
+            position: relative;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+        }
+
+        nav ul li a:hover {
+            color: #ddd;
+        }
+
+        /* Стили для формы регистрации */
+        .signup-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to top left, #56ccf2, #2f80ed);
+        }
+
+        .signup-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            transition: all 0.3s ease;
+        }
+
+        .signup-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .signup-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .signup-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .signup-form input:focus {
+            border-color: #565db3;
+        }
+
+        .signup-form button {
+            width: 100%;
+            padding: 12px;
+            background-color: #565db3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        .signup-form button:hover {
+            background-color: #3f47a3;
+        }
+
+        /* Стили для индикаторов пароля */
+        .password-requirements {
+            list-style-type: none;
+            padding: 0;
+            font-size: 14px;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        .password-requirements li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .password-requirements li span {
+            margin-left: 10px;
+        }
+
+        .valid {
+            color: green;
+        }
+
+        .invalid {
+            color: red;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .valid .checkbox {
+            background-color: #28a745;
+            border-radius: 50%;
+        }
+
+        .invalid .checkbox {
+            background-color: #dc3545;
+            border-radius: 50%;
+        }
+
+        /* Стили для кнопки видимости пароля */
+        .password-toggle {
+            position: absolute;
+            right: 20px;
+            top: 30px;
+            cursor: pointer;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header с логотипом, навигацией и поисковой строкой -->
+    <header>
+        <h1>TuneWave</h1>
+        <nav>
+            <ul>
+                <li><a href="Signup.html">Sign Up</a></li>
+                <li><a href="Login.html">Log In</a></li>
+            </ul>
+        </nav>
+        
+    </header>
+
+    <div class="signup-container">
+        <form class="signup-form" action="Signupafter.html" method="GET" id="signupForm">
+            <h2>Sign Up</h2>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Your Email" required>
+
+            <label for="password">Password</label>
+            <div style="position: relative;">
+                <input type="password" id="password" name="password" placeholder="Your Password" required oninput="checkPassword()">
+                <span class="password-toggle" onclick="togglePassword()">👁️</span>
+            </div>
+            
+            <ul class="password-requirements">
+                <li id="length" class="invalid">
+                    <div class="checkbox"></div>
+                    <span>At least 8 characters</span>
+                </li>
+                <li id="uppercase" class="invalid">
+                    <div class="checkbox"></div>
+                    <span>At least one uppercase letter</span>
+                </li>
+                <li id="number" class="invalid">
+                    <div class="checkbox"></div>
+                    <span>At least one number</span>
+                </li>
+                <li id="special" class="invalid">
+                    <div class="checkbox"></div>
+                    <span>At least one special character</span>
+                </li>
+            </ul>
+
+            <button type="submit" id="submitBtn" disabled>Sign Up</button>
+            <div class="error-message" id="errorMessage">Password does not meet the required criteria.</div>
+        </form>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const password = document.getElementById("password").value;
+            const lengthCheck = document.getElementById("length");
+            const uppercaseCheck = document.getElementById("uppercase");
+            const numberCheck = document.getElementById("number");
+            const specialCheck = document.getElementById("special");
+
+            const lengthRegex = /.{8,}/;
+            const uppercaseRegex = /[A-Z]/;
+            const numberRegex = /\d/;
+            const specialRegex = /[!@#$%^&*(),.?":{}|<>]/;
+
+            let valid = true;
+
+            if (lengthRegex.test(password)) {
+                lengthCheck.classList.remove('invalid');
+                lengthCheck.classList.add('valid');
+            } else {
+                lengthCheck.classList.remove('valid');
+                lengthCheck.classList.add('invalid');
+                valid = false;
+            }
+
+            if (uppercaseRegex.test(password)) {
+                uppercaseCheck.classList.remove('invalid');
+                uppercaseCheck.classList.add('valid');
+            } else {
+                uppercaseCheck.classList.remove('valid');
+                uppercaseCheck.classList.add('invalid');
+                valid = false;
+            }
+
+            if (numberRegex.test(password)) {
+                numberCheck.classList.remove('invalid');
+                numberCheck.classList.add('valid');
+            } else {
+                numberCheck.classList.remove('valid');
+                numberCheck.classList.add('invalid');
+                valid = false;
+            }
+
+            if (specialRegex.test(password)) {
+                specialCheck.classList.remove('invalid');
+                specialCheck.classList.add('valid');
+            } else {
+                specialCheck.classList.remove('valid');
+                specialCheck.classList.add('invalid');
+                valid = false;
+            }
+
+            if (valid) {
+                document.getElementById("submitBtn").disabled = false;
+                document.getElementById("errorMessage").style.display = "none";
+            } else {
+                document.getElementById("submitBtn").disabled = true;
+                document.getElementById("errorMessage").style.display = "block";
+            }
+        }
+
+        function togglePassword() {
+            const passwordField = document.getElementById("password");
+            const passwordFieldType = passwordField.type === "password" ? "text" : "password";
+            passwordField.type = passwordFieldType;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmation - Basic Plan</title>
+    <link rel="stylesheet" href="Style.css">
+    <link rel="icon" href="Logo TuneWave.png" type="image/png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #ADD8E6;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #565db3;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: white;
+        }
+
+        .confirmation-container {
+            margin-top: 60px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .confirmation-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .confirmation-card h2 {
+            color: #565db3;
+        }
+
+        .confirmation-card p {
+            font-size: 18px;
+            color: #333;
+            margin: 20px 0;
+        }
+
+        .confirmation-card button {
+            background-color: #565db3;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .confirmation-card button:hover {
+            background-color: #4448a0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="Logo TuneWave.png" alt="TuneWave Logo" width="50" height="50">
+    <h1>Payment Confirmation - Basic Plan</h1>
+</header>
+
+<div class="confirmation-container">
+    <div class="confirmation-card">
+        <h2>Payment Successful</h2>
+        <p>Your payment for the Basic Plan ($5/month) has been successfully processed.</p>
+        <p>Your subscription is now active!</p>
+        <button onclick="window.location.href='Index.html'">Go to Home Page</button>
+    </div>
+</div>
+
+</body>
+</html>

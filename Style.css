@@ -1,0 +1,105 @@
+body{
+    background-color: #4682B4 ;
+}
+
+header{
+    background-color: #565db3;
+}
+
+.form{
+    border: #44a0e2;
+    margin-top: 10px;
+    text-align: center; /* Выровнял весь текст внутри контейнера по левому краю */
+}
+
+
+.Rock{
+    margin-bottom: 10px;
+    width: 45px;
+}
+
+button{
+    float: left; /* Выровнял каждую кнопку по левому краю */
+    clear: both; /* Каждая новая кнопка будет начинаться с новой строки */
+}
+
+.button {
+    color: white;
+    font-size: 16px;
+    border-radius: 25px; 
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+    width: 210px;
+    height: 210px;
+    font-weight: bold;
+    font-size: x-large;
+    position: relative;
+}
+
+.search{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    background:#fff;
+    border-radius: 60px;
+    transition: 0.5s;
+    box-shadow: 0 0 0 5px #2573ef;
+    text-align: center;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+}
+
+/* Стили для шапки и подвала */
+header, footer {
+    background-color: #565db3;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Контейнер для блоков */
+.container {
+    display: flex;
+    justify-content: space-between; /* Блоки по краям */
+    align-items: center; /* Выравнивание по центру вертикально */
+    padding: 20px;
+    height: 300px;
+}
+
+/* Общие стили для всех блоков */
+.block {
+    background-color: #d1c4e9;
+    padding: 20px;
+    border-radius: 10px;
+    color: #333;
+    width: 30%; /* Каждый блок занимает 30% ширины */
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+/* Эффект при наведении */
+.block:hover {
+    transform: translateY(-10px);
+}
+
+/* Стили для левого и правого блоков */
+.left-block, .right-block {
+    background-color: #673ab7;
+    color: white;
+}
+
+/* Стили для центрального блока */
+.center-block {
+    background-color: #ffcc80;
+    color: #333;
+}

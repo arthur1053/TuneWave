@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TuneWave</title>
+    
+    <link rel="stylesheet" href="Style.css">
+    <style>
+        /* Общие стили */
+        body {
+            margin: 0;
+            /* background-color: #4682B4;   */
+            background: linear-gradient(to top left, #cccbcb, #ffffff);
+        }
+
+        header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: center;
+            background-color: #111;
+            padding: 10px 20px;
+            height: 90px;
+            width: 100%;
+            color: white;
+        }
+
+        .header-space {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 0 170px 0 70px;
+        }
+            
+
+        h1 {
+            margin-top: 10px;
+            margin-left: 15px;
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin-left: 150px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        nav ul li {
+            width: 110px;
+            margin-right: 40px;
+            border: 3px solid #ffffff;
+            border-radius: 15px;
+            padding: 7px 15px 7px 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+        }
+
+        nav ul li a:hover {
+            color: #ddd;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            max-width: 400px;
+            margin-left: 20px;
+        }
+
+        .search-bar input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 20px;
+            border: none;
+            font-size: 16px;
+        }
+
+        .search-bar input[type="text"]:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar button {
+            background-color: #fff;
+            border: none;
+            border-radius: 50%;
+            margin-left: -40px;
+            padding: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-bar button img {
+            width: 15px;
+            height: 15px;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 10px; 
+            font-size: 30px;
+            color: white;
+        }
+
+        .hamburger {
+            cursor: pointer;
+            font-size: 30px;
+            color: white;
+            margin: 0px 200px 0px 15px;
+        }
+
+        /* Стили для раздела с подписками */
+        .plans-section {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: #f0f0f0;
+        }
+
+        .plans-container {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+        }
+
+        .plan {
+            margin: 0 80px 0 80px 0;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 250px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+            transition: transform 0.3s;
+        }
+
+        .plan:hover {
+            transform: scale(1.05);
+        }
+
+        .plan h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #111;
+        }
+
+        .plan p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .plan .price {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .plan button {
+            background-color: #111;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .plan button:hover {
+            background-color: #111;
+        }
+
+        /* Убираем стандартный стиль ссылок */
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header с логотипом, навигацией и поисковой строкой -->
+<header>
+    <div class="hamburger" onclick="openSidebar()">
+        <div>&#9776;</div>
+    </div>
+    <div class="header-space">
+        <img src="audio-waves.png" style="height: 50px; margin-left: 20px;">
+        <h1>TuneWave</h1>
+    </div>
+    <!-- новый серч бар -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" list="genreSuggestions" placeholder="Search...">
+            <datalist id="genreSuggestions">
+                <option value="Rock"></option>
+                <option value="Pop"></option>
+                <option value="Hip Hop"></option>
+                <option value="Electronic"></option>
+                <option value="Jazz"></option>
+                <option value="Blues"></option>
+                <option value="Country"></option>
+                <option value="Metal"></option>
+                <option value="Classical"></option>
+                <option value="Reggae"></option>
+                <option value="Soul"></option>
+                <option value="R&B"></option>
+                <option value="Folk"></option>
+                <option value="Punk"></option>
+                <option value="Latin"></option>
+                <option value="World Music"></option>
+                <option value="Indie"></option>
+                <option value="Gospel"></option>
+                <option value="Experimental"></option>
+            </datalist>
+            <button onclick="searchFunction()">
+                <img src="https://cdn-icons-png.flaticon.com/512/54/54481.png" alt="Search">
+            </button>
+        </div>
+        
+    <nav>
+        <!-- изменены кнопки -->
+        <ul>
+            <li style="width: 350px;"><a href="Signup.html">Join to Tune by sign up</a></li> 
+            <li style="background: white;"><a href="Login.html" style="color: #111">Log In</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Секция с подписками -->
+<section class="plans-section">
+    <h1 style="font-style: bold; font-size: 60px; text-align: center; margin-top: 50px; margin-bottom: 80px; color: #111;">Choose your plan</h1>
+
+    <div class="plans-container">
+        <!-- Basic Plan -->
+        <div class="plan">
+            <h3>Basic</h3>
+            <p>Access to over 10,000 tracks, create playlists, and listen to curated music stations. Ad-supported experience.</p>
+            <p class="price">$5/month</p>
+            <button onclick="window.location.href='Basic-plan.html'">Select Plan</button>
+        </div>
+
+        <!-- Pro Plan -->
+        <div class="plan">
+            <h3>Pro</h3>
+            <p>Unlimited access to all tracks, ad-free experience, offline listening, and personalized playlists.</p>
+            <p class="price">$10/month</p>
+            <button onclick="window.location.href='Pro-plan.html'">Select Plan</button>
+        </div>
+
+        <!-- Premium Plan -->
+        <div class="plan">
+            <h3>Premium</h3>
+            <p>All features of Pro, plus high-definition audio, exclusive early access to new releases, and family sharing (up to 5 accounts).</p>
+            <p class="price">$15/month</p>
+            <button onclick="window.location.href='Premium-plan.html'">Select Plan</button>
+        </div>
+    </div>
+</section>
+
+<!-- Сайдбар слева -->
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+    <a href="Index.html">Home</a>
+    <a href="Aboutus.html">About us</a>
+    <a href="Services.html">Services</a>
+    <a href="history.html">History</a>
+    <a href="Playlist.html">Playlist</a>
+    <a href="Support.html">Support</a>
+</div>
+
+<script>
+    // Функция для открытия сайдбара
+    function openSidebar() {
+        document.getElementById("mySidebar").style.width = "250px";
+    }
+
+    // Функция для закрытия сайдбара
+    function closeSidebar() {
+        document.getElementById("mySidebar").style.width = "0";
+    }
+
+    // Простой обработчик поиска
+    function searchFunction() {
+        let query = document.getElementById("searchInput").value;
+        alert("Вы ищете: " + query);
+        // Здесь можно реализовать функционал перенаправления на результаты поиска
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TuneWave</title>
+    <link rel="icon" href="Logo TuneWave.png" type="image/png">
+    <link rel="stylesheet" href="Style.css">
+    <style>
+         /* Общие стили */
+         body {
+            margin: 0;
+            /* background-color: #4682B4;   */
+            background: linear-gradient(to top left, #cccbcb, #ffffff);
+        }
+
+        header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: center;
+            background-color: #111;
+            padding: 10px 20px;
+            height: 90px;
+            width: 100%;
+            color: white;
+        }
+
+        .header-space {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 0 170px 0 70px;
+        }
+
+        h1 {
+            margin-top: 10px;
+            margin-left: 15px;
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin-left: 150px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        nav ul li {
+            width: 110px;
+            margin-right: 40px;
+            border: 3px solid #ffffff;
+            border-radius: 15px;
+            padding: 7px 15px 7px 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+        }
+
+        nav ul li a:hover {
+            color: #ddd;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            max-width: 400px;
+            margin-left: 20px;
+        }
+
+        .search-bar input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 20px;
+            border: none;
+            font-size: 16px;
+        }
+
+        .search-bar input[type="text"]:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar button {
+            background-color: #fff;
+            border: none;
+            border-radius: 50%;
+            margin-left: -40px;
+            padding: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-bar button img {
+            width: 15px;
+            height: 15px;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            color: white;
+        }
+
+        .hamburger {
+            z-index: 1000;
+            cursor: pointer;
+            font-size: 30px;
+            color: white;
+            margin: 0px 200px 0px 15px;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        
+        /* Стили для контента */
+        .content {
+            display: flex;
+            justify-content: S;
+            margin: 50px;
+            gap: 50px;
+        }
+        
+        .songs-list {
+            width: 400px; /* Учитываем ширину нового блока и отступы */
+            margin-left: 70px;
+        }
+        
+        .song button {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 100%;
+            cursor: pointer;
+        }
+        
+        .song {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 400px;
+            padding: 10px;
+            margin: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .song:hover {
+            background: linear-gradient(to top left, #5e5d5d, #d1d0d0);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .song button {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 100%;
+            cursor: pointer;
+        }
+        
+        .song-image img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .song-info {
+            flex-grow: 1;
+            min-width: 0;
+        }
+        
+        .song-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .song-author {
+            font-size: 14px;
+            color: #666;
+            margin: 5px 0 0 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .tekst {
+            text-align: center;
+            width: 500px;
+            padding: 20px;
+            margin: 0px 70px 0px 170px;
+            background-color: #f4f4f4; /* Цвет фона для нового блока */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень для нового блока */
+        }
+        
+        .info {
+            display: fixed;
+            flex-direction: column;
+            height: 750px;
+            width: 500px;
+            padding: 20px;
+            background-color: #f4f4f4; /* Цвет фона для нового блока */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень для нового блока */
+        }
+        
+        .info h1 {
+            margin-bottom: 50px;
+        }
+
+        .info img{
+            display: block;
+            flex-direction: column;
+            margin: 0;
+            justify-content: center;
+            align-items: center;
+            width: 450px;
+            height: 450px;
+            border-radius: 10px;
+        }
+
+        .track-description{
+            margin: 20px 0 30px 0;
+
+        }
+
+        .track-description h2{
+            font-weight: bold;
+            font-size: xx-large;
+        }
+
+        .track-description p{
+            font-size: 18px;
+        }
+
+        .like-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .like-button, .save-button {
+            background-color: #565db3;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+
+        .like-button:hover, .save-button:hover {
+            background-color: #3e47a1;
+        }
+
+        /* Стили для кнопок жанров */
+        .genres {
+            display: flex;
+            flex-direction: column;
+            width: 15%;
+            padding: 10px;
+        }
+        
+        .genres a button {
+            background: linear-gradient(45deg, #d1c4e9, #673ab7);
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease, background 0.3s ease;
+            width: 100%;
+
+
+        }
+
+        .genres a button:hover {
+            background-color: #5a2ea6;
+        }
+
+        .fixed-bar {
+            position: fixed; /* Закрепляет бар внизу экрана */
+            bottom: 0; /* Располагает его у нижней границы */
+            left: 0; /* Выравнивает по левому краю */
+            height: 80px;
+            width: 100%; /* Растягивает бар на всю ширину окна */
+            background-color: #111; /* Цвет фона (можно изменить) */
+            color: #fff; /* Цвет текста */
+            padding: 10px 20px; /* Отступы для комфортного отображения */
+            display: flex; /* Flexbox для размещения элементов в строку */
+            justify-content: space-between; /* Разделяет элементы по краям */
+            align-items: center; /* Центрирует элементы по вертикали */
+            z-index: 1000; /* Устанавливает приоритет отображения */
+        }
+
+        .track-info {
+            justify-content: space-between;
+        }
+        
+        .track-details{
+            display: flex;
+            justify-content: space-between; 
+            margin-left: 80px
+        }
+
+        .track-details p{
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .fixed-bar img {
+            width: 50px;
+            margin-top: 25px;
+        }
+
+        .fixed-bar .controls {
+            display: flex;
+            gap: 10px; /* Отступы между кнопками */
+        }
+
+        .fixed-bar button {
+            background-color: #555; /* Цвет кнопки */
+            border: none; /* Убирает рамку */
+            color: #fff; /* Цвет текста */
+            padding: 10px;
+            border-radius: 5px; /* Закругленные углы */
+            cursor: pointer;
+        }
+
+        .fixed-bar button:hover {
+            background-color: #777; /* Цвет кнопки при наведении */
+        }
+
+        /* Адаптивный дизайн */
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column; /* Изменяем направление на колонку для мобильных устройств */
+            }
+
+            .song {
+                width: 100%;
+            }
+
+            .songs-list, .tekst, .sidebar-content {
+                width: 100%; /* Задаем ширину 100% для всех элементов */
+                margin: 0; /* Убираем отступы */
+            }
+
+            .genres {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .genres a button {
+                flex-grow: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header с логотипом, навигацией и поисковой строкой -->
+<header>
+    <div class="hamburger" onclick="openSidebar()">
+        <div>&#9776;</div>
+    </div>
+    <div class="header-space">
+        <img src="audio-waves.png" style="height: 50px; margin-left: 20px;">
+        <h1>TuneWave</h1>
+    </div>
+    <!-- новый серч бар -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" list="genreSuggestions" placeholder="Search...">
+            <datalist id="genreSuggestions">
+                <option value="Rock"></option>
+                <option value="Pop"></option>
+                <option value="Hip Hop"></option>
+                <option value="Electronic"></option>
+                <option value="Jazz"></option>
+                <option value="Blues"></option>
+                <option value="Country"></option>
+                <option value="Metal"></option>
+                <option value="Classical"></option>
+                <option value="Reggae"></option>
+                <option value="Soul"></option>
+                <option value="R&B"></option>
+                <option value="Folk"></option>
+                <option value="Punk"></option>
+                <option value="Latin"></option>
+                <option value="World Music"></option>
+                <option value="Indie"></option>
+                <option value="Gospel"></option>
+                <option value="Experimental"></option>
+            </datalist>
+            <button onclick="searchFunction()">
+                <img src="https://cdn-icons-png.flaticon.com/512/54/54481.png" alt="Search">
+            </button>
+        </div>
+
+    <nav>
+        <!-- изменены кнопки -->
+        <ul>
+            <li style="width: 350px;"><a href="Signup.html">Join to Tune by sign up</a></li>
+            <li style="background: white;"><a href="Login.html" style="color: #111">Log In</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Сайдбар -->
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+    <a href="index.html">Home</a>
+    <a href="Aboutus.html">About us</a>
+    <a href="Services.html">Services</a>
+    <a href="history.html">History</a>
+    <a href="Playlist.html">Playlist</a>
+    <a href="Support.html">Support</a>
+
+</div>
+
+<script>
+    function openSidebar() {
+        document.getElementById("mySidebar").style.width = "250px";
+    }
+
+    function closeSidebar() {
+        document.getElementById("mySidebar").style.width = "0";
+    }
+
+    // Track list
+    const tracks = [
+        {
+            title: "Back in Black",
+            artist: "AC/DC",
+            image: "https://th.bing.com/th/id/OIP.etyz3UGA518kdzEHiO79RgHaHY?w=196&h=195&c=7&r=0&o=5&pid=1.7",
+            description: "One of the greatest rock albums of all time."
+        },
+        {
+            title: "Bohemian Rhapsody",
+            artist: "Queen",
+            image: "https://th.bing.com/th/id/OIP.uoN-03rhHUFtvXDhQjHipAHaHa?w=193&h=193&c=7&r=0&o=5&pid=1.7",
+            description: "A classic masterpiece by Queen."
+        },
+        {
+            title: "Stairway to Heaven",
+            artist: "Led Zeppelin",
+            image: "https://th.bing.com/th?id=OSK.15292b44579f3eec50d0714385d00b6b&w=46&h=46&c=11&rs=1&qlt=80&o=6&dpr=2&pid=SANGAM",
+            description: "An epic rock anthem by Led Zeppelin."
+        },
+        {
+            title: "Let It Be",
+            artist: "The Beatles",
+            image: "https://th.bing.com/th/id/OIP.Z5JCYmZ4UNMRqjRXUbf6uQHaHa?w=200&h=200&c=7&r=0&o=5&pid=1.7",
+            description: "///"
+        },
+        {
+            title: "Billie Jean",
+            artist: "Michael Jackson",
+            image: "https://th.bing.com/th/id/OIP.jvAde8x2Aq4usLHCXjxq4wHaHa?w=203&h=203&c=7&r=0&o=5&pid=1.7",
+            description: "///"
+        },
+        {
+            title: "Comfortably Numb",
+            artist: "Pink Floyd",
+            image: "https://th.bing.com/th/id/OIP.byTOMuQFogtzBG98yq3KugHaHe?w=203&h=205&c=7&r=0&o=5&pid=1.7",
+            description: "///"
+        },
+        {
+            title: "Enter Sandman",
+            artist: "Metalica",
+            image: "https://th.bing.com/th/id/OIP.sHfZxVwpn0K2qUV8lS0PHAAAAA?w=193&h=180&c=7&r=0&o=5&pid=1.7",
+            description: "///"
+        },
+        {
+            title: "Suspicious Minds",
+            artist: "Elvis Presley",
+            image: "https://th.bing.com/th/id/OIP.MOJt1SbUkfg5QlAH9qJcyQHaHm?w=193&h=199&c=7&r=0&o=5&pid=1.7",
+            description: "///"
+        },
+        {
+            title: "Space Oddity",
+            artist: "Led Zeppelin",
+            image: "https://th.bing.com/th/id/OIP.lNgrySHLyCLYzCZuC9xF5wHaH_?w=163&h=180&c=7&r=0&o=5&pid=1.7",
+            description: "///"
+        },
+        {
+            title: "With or Without You",
+            artist: "U2",
+            image: "https://th.bing.com/th/id/OIP._hagi5HFUP5IHpKv3Ad0CAHaHW?w=181&h=180&c=7&r=0&o=5&pid=1.7",
+            description: "An epic rock anthem by Led Zeppelin."
+        },
+        {
+            title: "Paint It Black",
+            artist: "The Rolling Stones",
+            image: "https://th.bing.com/th/id/OIP.vQ-4W_ZYLvXc7xYklCM1-wHaHJ?w=185&h=180&c=7&r=0&o=5&pid=1.7",
+            description: "///"
+        },
+        {
+            title: "Smells Like Teen Spirit",
+            artist: "Nirvana",
+            image: "https://th.bing.com/th/id/OIP.UeqXK8MbN37EPi-OxpEDEAHaHa?w=149&h=180&c=7&r=0&o=5&pid=1.7",
+            description: "///"
+        }
+    ];
+
+function showTrackInfo(index) {
+    const track = tracks[index];
+    const trackInfo = document.getElementById('track-info');
+    const trackImage = document.getElementById('track-image');
+    const trackTitle = document.getElementById('track-title');
+    const trackArtist = document.getElementById('track-artist');
+    const trackDescription = document.getElementById('track-description');
+
+    // Обновление содержимого
+    trackImage.src = track.image;
+    trackTitle.textContent = track.title;
+    trackArtist.textContent = track.artist;
+    trackDescription.textContent = track.description;
+}
+
+function showaBarTrackInfo(index) {
+    const track = tracks[index];
+    const barTrackInfo = document.getElementById('bar-track-info');
+    const trackImage = document.getElementById('bar-track-image');
+    const trackTitle = document.getElementById('bar-track-title');
+    const trackArtist = document.getElementById('bar-track-artist');
+
+    // Обновление содержимого
+    trackImage.src = track.image;
+    trackTitle.textContent = track.title;
+    trackArtist.textContent = track.artist;
+}
+
+    // Функция для отметки "Нравится"
+
+    function likeSong() {
+        alert(`Added to favourites!`);
+    }
+
+    // Функция для сохранения трека
+    function saveSong() {
+        alert(`Saved!`);
+    }
+
+
+</script>
+
+ <!-- Контент с музыкальными треками -->
+<div class="content">
+    <!-- Блоки с 12 треками -->
+    <div class="songs-list">
+
+        <div class="song">
+            <button id="Back In Black" onclick="showTrackInfo(0); showaBarTrackInfo(0)">
+                <div class="song-image">
+                    <img src="https://th.bing.com/th/id/OIP.etyz3UGA518kdzEHiO79RgHaHY?w=196&h=195&c=7&r=0&o=5&pid=1.7" alt="Back In Black">
+                </div>
+                <div class="song-info">
+                    <p class="song-name" id="song-title">Back In Black</p>
+                    <p class="song-author" id="song-author">AC/DC</p>
+                </div>
+                <img src="icons/play-button.png" style="height: 20px; width: 20px; margin: 0px 30px 0px 30px;">
+            </button>
+        </div>
+
+        <div class="song">
+            <button id="Bohemian Rhapsody" onclick="showTrackInfo(1); showaBarTrackInfo(1)">
+                <div class="song-image">
+                    <img src="https://th.bing.com/th/id/OIP.uoN-03rhHUFtvXDhQjHipAHaHa?w=193&h=193&c=7&r=0&o=5&pid=1.7" alt="Bohemian Rhapsody" />
+                </div>
+                <div class="song-info">
+                    <p class="song-name">Bohemian Rhapsody</p>
+                    <p class="song-author">Queen</p>
+                </div>
+                <img src="icons/play-button.png" style="height: 20px; width: 20px; margin: 0px 30px 0px 30px;">
+            </button>
+        </div>
+            
+
+        <div class="song">
+            <button id="Back In Black" onclick="showTrackInfo(2); showaBarTrackInfo(2)">
+                <div class="song-image">
+                    <img src="https://th.bing.com/th?id=OSK.15292b44579f3eec50d0714385d00b6b&w=46&h=46&c=11&rs=1&qlt=80&o=6&dpr=2&pid=SANGAM" alt="Stairway to Heaven" />
+                </div>
+                <div class="song-info">
+                    <p class="song-name">Stairway to Heaven</p>
+                    <p class="song-author">Led Zeppelin</p>
+                </div>
+                <img src="icons/play-button.png" style="height: 20px; width: 20px; margin: 0px 30px 0px 30px;">
+            </button>
+        </div>
+
+        <div class="song">
+            <button id="Back In Black" onclick="showTrackInfo(3); showaBarTrackInfo(3)">
+                <div class="song-image">
+                    <img src="https://th.bing.com/th/id/OIP.Z5JCYmZ4UNMRqjRXUbf6uQHaHa?w=200&h=200&c=7&r=0&o=5&pid=1.7" alt="Let It Be" />
+                </div>
+                <div class="song-info">
+                    <p class="song-name">Let It Be</p>
+                    <p class="song-author">The Beatles</p>
+                </div>
+                <img src="icons/play-button.png" style="height: 20px; width: 20px; margin: 0px 30px 0px 30px;">
+            </button>
+        </div>
+
+        <div class="song">
+            <button id="Back In Black" onclick="showTrackInfo(4); showaBarTrackInfo(4)">
+                <div class="song-image">
+                    <img src="https://th.bing.com/th/id/OIP.jvAde8x2Aq4usLHCXjxq4wHaHa?w=203&h=203&c=7&r=0&o=5&pid=1.7" alt="Billie Jean" />
+                </div>
+                <div class="song-info">
+                    <p class="song-name">Billie Jean</p>
+                    <p class="song-author">Michael Jackson</p>
+                </div>
+                <img src="icons/play-button.png" style="height: 20px; width: 20px; margin: 0px 30px 0px 30px;">
+            </button> 
+        </div>
+
+        <div class="song">
+            <button id="Back In Black" onclick="showTrackInfo(5); showaBarTrackInfo(5)">
+                <div class="song-image">
+                    <img src="https://th.bing.com/th/id/OIP.byTOMuQFogtzBG98yq3KugHaHe?w=203&h=205&c=7&r=0&o=5&pid=1.7" alt="Comfortably Numb" />
+                </div>
+                <div class="song-info">
+                    <p class="song-name">Comfortably Numb</p>
+                    <p class="song-author">Pink Floyd</p>
+                </div>
+                <img src="icons/play-button.png" style="height: 20px; width: 20px; margin: 0px 30px 0px 30px;">
+            </button>
+        </div>
+
+        <div class="song">
+            <button id="Back In Black" onclick="showTrackInfo(6); showaBarTrackInfo(6)">     
+            <div class="song-image">
+                    <img src="https://th.bing.com/th/id/OIP.sHfZxVwpn0K2qUV8lS0PHAAAAA?w=193&h=180&c=7&r=0&o=5&pid=1.7" alt="Enter Sandman" />
+                </div>
+                <div class="song-info">
+                    <p class="song-name">Enter Sandman</p>
+                    <p class="song-author">Metallica</p>
+                </div>
+                <img src="icons/play-button.png" style="height: 20px; width: 20px; margin: 0px 30px 0px 30px;">
+            </button>
+        </div>
+
+        <div class="song">
+            <button id="Back In Black" onclick="showTrackInfo(7); showaBarTrackInfo(7)">     
+            <div class="song-image">
+                    <img src="https://th.bing.com/th/id/OIP.MOJt1SbUkfg5QlAH9qJcyQHaHm?w=193&h=199&c=7&r=0&o=5&pid=1.7" alt="Suspicious Minds" />
+                </div>
+                <div class="song-info">
+                    <p class="song-name">Suspicious Minds</p>
+                    <p class="song-author">Elvis Presley</p>
+                </div>
+                <img src="icons/play-button.png" style="height: 20px; width: 20px; margin: 0px 30px 0px 30px;">
+            </button>
+        </div>
+
+        <div class="song">
+            <button id="Back In Black" onclick="showTrackInfo(8); showaBarTrackInfo(8)">     
+                <div class="song-image">
+                    <img src="https://th.bing.com/th/id/OIP.lNgrySHLyCLYzCZuC9xF5wHaH_?w=163&h=180&c=7&r=0&o=5&pid=1.7" alt="Space Oddity" />
+                </div>
+                <div class="song-info">
+                    <p class="song-name">Space Oddity</p>
+                    <p class="song-author">David Bowie</p>
+                </div>
+                <img src="icons/play-button.png" style="height: 20px; width: 20px; margin: 0px 30px 0px 30px;">
+            </button>
+        </div>
+
+        <div class="song">
+            <button id="Back In Black" onclick="showTrackInfo(9); showaBarTrackInfo(9)">     
+                <div class="song-image">
+                    <img src="https://th.bing.com/th/id/OIP._hagi5HFUP5IHpKv3Ad0CAHaHW?w=181&h=180&c=7&r=0&o=5&pid=1.7" alt="With or Without You" />
+                </div>
+                <div class="song-info">
+                    <p class="song-name">With or Without You</p>
+                    <p class="song-author">U2</p>
+                </div>
+                <img src="icons/play-button.png" style="height: 20px; width: 20px; margin: 0px 30px 0px 30px;">
+            </button>
+        </div>
+
+        <div class="song">
+            <button id="Back In Black" onclick="showTrackInfo(10); showaBarTrackInfo(10)">     
+                <div class="song-image">
+                    <img src="https://th.bing.com/th/id/OIP.vQ-4W_ZYLvXc7xYklCM1-wHaHJ?w=185&h=180&c=7&r=0&o=5&pid=1.7" alt="Paint It Black" />
+                </div>
+                <div class="song-info">
+                    <p class="song-name">Paint It Black</p>
+                    <p class="song-author">The Rolling Stones</p>
+                </div>
+                <img src="icons/play-button.png" style="height: 20px; width: 20px; margin: 0px 30px 0px 30px;">
+            </button>
+        </div>
+
+        <div class="song">
+            <button id="Back In Black" onclick="showTrackInfo(11); showaBarTrackInfo(11)">     
+                <div class="song-image">
+                    <img src="https://th.bing.com/th/id/OIP.UeqXK8MbN37EPi-OxpEDEAHaHa?w=149&h=180&c=7&r=0&o=5&pid=1.7" alt="Smells Like Teen Spirit" />
+                </div>
+                <div class="description-info">
+                    <h2 class="song-name">Smells Like Teen Spirit</p>
+                    <p class="song-author">Nirvana</p>
+                </div>
+                <img src="icons/play-button.png" style="height: 20px; width: 20px; margin: 0px 30px 0px 30px;">
+            </button>
+        </div> 
+    </div>
+
+    <div class="tekst">
+        <h2>Song tekst</h2>
+        <p>Only with premium</p>
+    </div>
+
+    <div class="info">
+        <h1>About track</h1>
+        <img id="track-image">
+        <div class="track-description">
+            <h2 id="track-title">No track playnig</h2>
+            <p id="track-artist"></p>
+        </div>
+        <p id="track-description"></p>
+    </div>
+    
+    <div class="fixed-bar">
+        <div class="track-info">
+            <div class="track-image">
+                <img id="bar-track-image">
+            </div>
+            <div class="track-details">
+                <h5 id="bar-track-title">No track playing</h5>
+                <p id="bar-track-artist">Unknown Artist</p>
+            </div>
+        </div>
+        <div class="controls">
+            <button id="prev-btn" onclick="likeSong()">like</button>
+            <button id="play-pause-btn" onclick="saveSong()">save</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TuneWave</title>
+    <link rel="icon" href="Logo TuneWave.png" type="image/png">
+    <link rel="stylesheet" href="Style.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #ADD8E6;  
+        }
+
+        /* Header and Navigation Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #565db3;
+            padding: 10px 20px;
+            color: white;
+            position: relative;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+        }
+
+        nav ul li a:hover {
+            color: #ddd;
+        }
+
+        /* Search Bar Styles */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            max-width: 400px;
+            margin-left: 20px;
+        }
+
+        .search-bar input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 20px;
+            border: none;
+            font-size: 16px;
+        }
+
+        .search-bar input[type="text"]:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar button {
+            background-color: #fff;
+            border: none;
+            border-radius: 50%;
+            margin-left: -40px;
+            padding: 8px;
+            cursor: pointer;
+            margin-bottom: -1.5px;
+        }
+
+        .search-bar button img {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 1000;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 10px; 
+            font-size: 30px;
+            color: white;
+        }
+
+        /* Hamburger Button Styles */
+        .hamburger {
+            font-size: 30px;
+            cursor: pointer;
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            color: white;
+        }
+
+        /* Content Styles */
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+        .song {
+            width: 48%;
+            margin-bottom: 20px;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .song-info {
+            flex-grow: 1;
+        }
+
+        .song-info p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .song audio {
+            width: 100%;
+        }
+
+        .like-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .like-button, .save-button {
+            background-color: #565db3;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+
+        .like-button:hover, .save-button:hover {
+            background-color: #3e47a1;
+        }
+
+        /* Genre Button Styles */
+        .genres {
+            display: flex;
+            flex-direction: column;
+            width: 15%;
+            padding: 10px;
+        }
+
+        .genres a button {
+            background: linear-gradient(45deg, #d1c4e9, #673ab7); 
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 25px; 
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease, background 0.3s ease;
+            width: 100%;          
+        }
+
+        .genres a button:hover {
+            background-color: #5a2ea6;
+        }
+
+        /* Adaptive Design */
+        @media (max-width: 768px) {
+            .song {
+                width: 100%;
+            }
+
+            .genres {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .genres a button {
+                flex-grow: 1;
+                margin-bottom: 10px; /* Add margin for spacing */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header with logo, navigation, and search bar -->
+<header>
+    <div class="hamburger" onclick="openSidebar()">&#9776;</div>
+    <h1>TuneWave</h1>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search...">
+        <button onclick="searchFunction()">
+            <img src="https://cdn-icons-png.flaticon.com/512/54/54481.png" alt="Search">
+        </button>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="Signup.html">Sign Up</a></li>
+            <li><a href="Login.html">Log In</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Sidebar -->
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+    <a href="Index.html">Home</a>
+    <a href="Aboutus.html">About us</a>
+    <a href="Services.html">Services</a>
+    <a href="history.html">History</a>
+    <a href="Playlist.html">Playlist</a>
+    <a href="Support.html">Support</a>
+    <a href="Rock.html">Rock</a>
+    <a href="Pop.html">Pop</a>
+    <a href="Hip.html">Hip Hop / Rap</a>
+    <a href="Electronic.html">Electronic</a>
+    <a href="Jazz.html">Jazz</a>
+    <a href="Blues.html">Blues</a>
+    <a href="Country.html">Country</a>
+    <a href="Metal.html">Metal</a>
+    <a href="Classical.html">Classical</a>
+    <a href="Reggae.html">Reggae</a>
+    <a href="Soul.html">Soul</a>
+    <a href="RB.html">R&B</a>
+    <a href="Folk.html">Folk</a>
+    <a href="Punk.html">Punk</a>
+    <a href="Latin.html">Latin</a>
+    <a href="World.html">World Music</a>
+    <a href="Indie.html">Indie</a>
+    <a href="Gospel.html">Gospel</a>
+    <a href="Experimental.html">Experimental</a>
+</div>
+
+<script>
+    function openSidebar() {
+        document.getElementById("mySidebar").style.width = "250px";
+    }
+
+    function closeSidebar() {
+        document.getElementById("mySidebar").style.width = "0";
+    }
+
+    // Like and Save Functions
+    function likeSong(songTitle) {
+        alert(`${songTitle} added to favorites!`);
+    }
+
+    function saveSong(songTitle) {
+        alert(`${songTitle} saved!`);
+    }
+</script>
+
+
+<div class="content">
+    <div class="song">
+        <div class="song-info">
+            <p>Youssou N'Dour - Seven Seconds</p>
+            <audio controls>
+                <source src="music/youssou-ndour-seven-seconds.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Youssou N\'Dour - Seven Seconds')">❤ Like</button>
+            <button class="save-button" onclick="saveSong('Youssou N\'Dour - Seven Seconds')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Buika - My Little Girl</p>
+            <audio controls>
+                <source src="music/buika-mi-nina-lola.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Buika - My Little Girl')">❤ Like</button>
+            <button class="save-button" onclick="saveSong('Buika - My Little Girl')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Ali Farka Touré - Ai Du</p>
+            <audio controls>
+                <source src="music/ali-farka-toure-ai-du.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Ali Farka Touré - Ai Du')">❤ Like</button>
+            <button class="save-button" onclick="saveSong('Ali Farka Touré - Ai Du')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Tinariwen - Sastanàqqàm</p>
+            <audio controls>
+                <source src="music/tinariwen-sastanaqqam.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Tinariwen - Sastanàqqàm')">❤ Like</button>
+            <button class="save-button" onclick="saveSong('Tinariwen - Sastanàqqàm')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Gipsy Kings - Bamboleo</p>
+            <audio controls>
+                <source src="music/gipsy-kings-bamboleo.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Gipsy Kings - Bamboleo')">❤ Like</button>
+            <button class="save-button" onclick="saveSong('Gipsy Kings - Bamboleo')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Cesária Évora - Sadness</p>
+            <audio controls>
+                <source src="music/cesaria-evora-sodade.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Cesária Évora - Sadness')">❤ Like</button>
+            <button class="save-button" onclick="saveSong('Cesária Évora - Sadness')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Omar Souleyman - Warni Warni</p>
+            <audio controls>
+                <source src="music/omar-souleyman-warni-warni.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Omar Souleyman - Warni Warni')">❤ Like</button>
+            <button class="save-button" onclick="saveSong('Omar Souleyman - Warni Warni')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Susana Baca - The Flower of Cinnamon</p>
+            <audio controls>
+                <source src="music/susana-baca-la-flor-de-la-canela.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Susana Baca - The Flower of Cinnamon')">❤ Like</button>
+            <button class="save-button" onclick="saveSong('Susana Baca - The Flower of Cinnamon')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Los Lobos - La Bamba</p>
+            <audio controls>
+                <source src="music/los-lobos-la-bamba.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Los Lobos - La Bamba')">❤ Like</button>
+            <button class="save-button" onclick="saveSong('Los Lobos - La Bamba')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Mercedes Sosa - Thanks to Life</p>
+            <audio controls>
+                <source src="music/mercedes-sosa-gracias-a-la-vida.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Mercedes Sosa - Thanks to Life')">❤ Like</button>
+            <button class="save-button" onclick="saveSong('Mercedes Sosa - Thanks to Life')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Rokia Traoré - Friendship</p>
+            <audio controls>
+                <source src="music/rokia-traore-lamitie.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Rokia Traoré - Friendship')">❤ Like</button>
+            <button class="save-button" onclick="saveSong('Rokia Traoré - Friendship')">💾 Save</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

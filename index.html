@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TuneWave</title>
+    <link rel="stylesheet" href="Style.css">
+    <link rel="icon" href="Logo TuneWave.png" type="image/png">
+    <style>
+        /* стиль менял но там каша из-за файла цсс */
+        body {
+            margin: 0;
+            /* background-color: #4682B4;   */
+            background: linear-gradient(to top left, #cccbcb, #ffffff);
+        }
+
+        header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: center;
+            background-color: #111;
+            padding: 10px 20px;
+            height: 90px;
+            width: 100%;
+            color: white;}
+
+        h1 {
+            margin-top: 10px;
+            margin-left: 15px;
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin-left: 150px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        nav ul li {
+            width: 110px;
+            margin-right: 40px;
+            border: 3px solid #ffffff;
+            border-radius: 15px;
+            padding: 7px 15px 7px 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+        }
+
+        nav ul li a:hover {
+            color: #ddd;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            max-width: 400px;
+            margin-left: 20px;
+        }
+
+        .search-bar input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 20px;
+            border: none;
+            font-size: 16px;
+        }
+
+        .search-bar input[type="text"]:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar button {
+            background-color: #fff;
+            border: none;
+            border-radius: 50%;
+            margin-left: -40px;
+            padding: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-bar button img {
+            width: 15px;
+            height: 15px;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 10px; 
+            font-size: 30px;
+            color: white;
+        }
+
+        .hamburger {
+            cursor: pointer;
+            font-size: 30px;
+            color: white;
+            margin: 0px 200px 0px 15px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .block {
+            width: 30%;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
+        .block img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .block p {
+            text-align: justify;
+        }
+
+        .block h2 {
+            text-align: center;
+            color: #000000;
+        }
+
+        .contnent {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .contnent a {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 10px 20px 10px 20px;
+            padding: 5px;
+        }
+
+        .contnent img {
+            width: 150px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .contnent button {
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px; 
+            background-color: #1f1e1e; 
+            color: white; /* Цвет текста */
+            border: 3px solid #111; /* Параметры рамки */
+            border-radius: 10px; 
+            cursor: pointer; 
+        }
+
+        .contnent p {
+            text-align: right;
+            margin-top: 10px; 
+        }
+
+        .contnent button:hover {
+            background-color: #4e4e4e;
+        }
+
+        @media (max-width: 768px) {
+            .block {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav ul li {
+                margin: 10px 0;
+            }
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .search-bar {
+                margin: 10px 0;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 20px;
+            }
+
+            nav ul li {
+                font-size: 16px;
+            }
+
+            .search-bar input[type="text"] {
+                font-size: 14px;
+            }
+
+            .contnent button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+
+        .header-space {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 0 170px 0 70px;
+        }
+
+       button p{
+        position: absolute; /* Добавляем position: absolute */
+        bottom: 10px; /* Располагаем текст снизу */
+        right: 10px;
+       }
+
+
+        @font-face {
+            font-family: 'Whitney';
+            src: url('Whitney-Font.otf') format('opentype');
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="hamburger" onclick="openSidebar()">
+        <div>&#9776;</div>
+    </div>
+    <div class="header-space">
+        <img src="audio-waves.png" style="height: 50px; margin-left: 20px;">
+        <h1>TuneWave</h1>
+    </div>
+    <!-- новый серч бар -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" list="genreSuggestions" placeholder="Search...">
+            <datalist id="genreSuggestions">
+                <option value="Rock"></option>
+                <option value="Pop"></option>
+                <option value="Hip Hop"></option>
+                <option value="Electronic"></option>
+                <option value="Jazz"></option>
+                <option value="Blues"></option>
+                <option value="Country"></option>
+                <option value="Metal"></option>
+                <option value="Classical"></option>
+                <option value="Reggae"></option>
+                <option value="Soul"></option>
+                <option value="R&B"></option>
+                <option value="Folk"></option>
+                <option value="Punk"></option>
+                <option value="Latin"></option>
+                <option value="World Music"></option>
+                <option value="Indie"></option>
+                <option value="Gospel"></option>
+                <option value="Experimental"></option>
+            </datalist>
+            <button onclick="searchFunction()">
+                <img src="https://cdn-icons-png.flaticon.com/512/54/54481.png" alt="Search">
+            </button>
+        </div>
+        
+    <nav>
+        <!-- изменены кнопки -->
+        <ul>
+            <li style="width: 350px;"><a href="Signup.html">Join to Tune by sign up</a></li> 
+            <li style="background: white;"><a href="Login.html" style="color: #111">Log In</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+    <a href="Index.html">Home</a>
+    <a href="Aboutus.html">About us</a>
+    <a href="Services.html">Services</a>
+    <a href="history.html">History</a>
+    <a href="Playlist.html">Playlist</a>
+    <a href="Support.html">Support</a>
+</div>
+
+<h1 style="font-style: bold; font-size: 60px; text-align: center; margin-top: 50px; margin-bottom: 50px; color: #111;">Create your style</h1>
+
+<div class="contnent">
+    <a href="Rock.html"><button class="button"><img src = "labels/guitar.png"><p>Rock</p> </button></a>
+    <a href="Pop.html"><button class="button"><img src = "labels/kpop.png"><p>Pop</p></button></a>
+    <a href="Hip.html"><button class="button"><img src = "labels/beat-box.png"><p>Hip Hop / Rap</p></button></a>
+    <a href="Electronic.html"><button class="button"><img src = "labels/love-song.png"><p>Electronic</p></button></a>
+    <a href="Jazz.html"><button class="button"><img src = "labels/jazz.png"><p>Jazz</p></button></a>
+    <a href="Blues.html"><button class="button"><img src = "labels/german.png"><p>Blues</p></button></a>
+    <a href="Country.html"><button class="button"><img src = "labels/music.png"><p>Country</p></button></a>
+    <a href="Metal.html"><button class="button"><img src = "labels/music (1).png"><p>Metal</p></button></a>
+    <a href="Classical.html"><button class="button"><img src = "labels/conductor.png"><p>Classical</p></button></a>
+    <a href="Reggae.html"><button class="button"><img src = "labels/reggae.png"><p>Reggae</p></button></a>
+    <a href="Soul.html"><button class="button"><img src = "labels/music (2).png"><p>Soul</p></button></a>
+    <a href="RB.html"><button class="button"><img src = "labels/rb.png"><p>RB</p></button></a>
+    <a href="Folk.html"><button class="button"><img src = "labels/folk-art.png"><p>Folk</p></button></a>
+    <a href="Punk.html"><button class="button"><img src = "labels/punk.png"><p>Punk</p></button></a>
+    <a href="Latin.html"><button class="button"><img src = "labels/music (3).png"><p>Latin</p></button></a>
+    <a href="World.html"><button class="button"><img src = "labels/world-music-day.png"><p>World Music</p></button></a>
+    <a href="Indie.html"><button class="button"><img src = "labels/rock (1).png"><p>Indie</p></button></a>
+    <a href="Gospel.html"><button class="button"><img src = "labels/bible.png"><p>Gospel</p></button></a>
+    <a href="Experimental.html"><button class="button"><img src = "labels/tuning-fork.png"><p>Experimental</p></button></a>
+</div>
+
+<div class="container">
+    <div class="block left-block">
+        <h2>Rock Legends</h2>
+        <p>Queen, one of the most iconic rock bands in history, formed in 1970 in London. The band's lineup included Freddie Mercury, Brian May, Roger Taylor, and John Deacon. Known for their energetic performances and unforgettable songs like "Bohemian Rhapsody," "We Will Rock You," and "Don't Stop Me Now," Queen became one of the world's best-selling music artists. Their unique blend of rock, opera, and theater captivated audiences worldwide. Freddie Mercury, with his extraordinary vocal range and flamboyant stage presence, became a global icon. Queen continues to inspire new generations of fans with their timeless music and innovative sound.</p>
+    </div>
+
+    <div class="block center-block">
+        <h2>Jazz Innovators</h2>
+        <p>Miles Davis is a name synonymous with jazz innovation. As a trumpeter, bandleader, and composer, Davis was at the forefront of almost every major development in jazz during the second half of the 20th century. From bebop to cool jazz, from modal jazz to jazz fusion, his creative vision shaped the genre. Albums like "Kind of Blue" and "Bitches Brew" not only broke new ground but also became some of the best-selling jazz albums of all time. Davis's restless spirit and constant search for new musical directions made him one of the most influential figures in the history of jazz.</p>
+    </div>
+
+    <div class="block right-block">
+        <h2>Indie Visionaries</h2>
+        <p>Radiohead, an English rock band formed in 1985, is often regarded as one of the most influential alternative bands of the past few decades. Known for their experimental approach to music, they have defied genre boundaries, incorporating elements of rock, electronic music, classical, and jazz into their sound. Albums like "OK Computer" and "Kid A" have been hailed as groundbreaking, pushing the limits of what rock music could be. Frontman Thom Yorke's haunting vocals and the band's unconventional compositions make Radiohead a leading figure in the indie and alternative music scenes.</p>
+    </div>
+</div>
+
+<script>
+    function openSidebar() {
+        document.getElementById("mySidebar").style.width = "250px";
+    }
+
+    function closeSidebar() {
+        document.getElementById("mySidebar").style.width = "0";
+    }
+
+    function searchFunction() {
+        const input = document.getElementById("searchInput").value.toLowerCase();
+        const genres = [
+            "rock", "pop", "hip hop", "electronic", "jazz", "blues",
+            "country", "metal", "classical", "reggae", "soul", "r&b",
+            "folk", "punk", "latin", "world music", "indie", "gospel", "experimental"
+        ];
+        const matchedGenre = genres.find(genre => genre.includes(input));
+        if (matchedGenre) {
+            window.location.href = `${matchedGenre.replace(/\s+/g, '')}.html`;
+        } else {
+            alert("Genre not found.");
+        }
+    }
+</script>
+
+</body>
+</html>

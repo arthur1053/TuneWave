@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TuneWave</title>
+    <link rel="icon" href="Logo TuneWave.png" type="image/png">
+    <link rel="stylesheet" href="Style.css">
+    <style>
+         /* Общие стили */
+         body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #ADD8E6;  
+        }
+
+        /* Стили для шапки и навигации */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #565db3;
+            padding: 10px 20px;
+            color: white;
+            position: relative;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+        }
+
+        nav ul li a:hover {
+            color: #ddd;
+        }
+
+        /* Стили для поисковой строки */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            max-width: 400px;
+            margin-left: 20px;
+        }
+
+        .search-bar input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 20px;
+            border: none;
+            font-size: 16px;
+        }
+
+        .search-bar input[type="text"]:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar button {
+            background-color: #fff;
+            border: none;
+            border-radius: 50%;
+            margin-left: -40px;
+            padding: 8px;
+            cursor: pointer;
+            margin-bottom: -1.5px;
+        }
+
+        .search-bar button img {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Стили для сайдбара */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 1000;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 10px; 
+            font-size: 30px;
+            color: white;
+        }
+
+        /* Стили для кнопки-гамбургера */
+        .hamburger {
+            font-size: 30px;
+            cursor: pointer;
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            color: white;
+        }
+
+        /* Отступ между логотипом и гамбургером */
+        header h1 {
+            margin-left: 50px; 
+            margin-top: 15px;
+        }
+
+
+        /* Стили для контента */
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+        .song {
+            width: 48%;
+            margin-bottom: 20px;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .song-info {
+            flex-grow: 1;
+        }
+
+        .song-info p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .song audio {
+            width: 100%;
+        }
+
+        .like-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .like-button, .save-button {
+            background-color: #565db3;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+
+        .like-button:hover, .save-button:hover {
+            background-color: #3e47a1;
+        }
+
+        /* Стили для кнопок жанров */
+        .genres {
+            display: flex;
+            flex-direction: column;
+            width: 15%;
+            padding: 10px;
+        }
+
+        .genres a button {
+            background: linear-gradient(45deg, #d1c4e9, #673ab7); 
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 25px; 
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease, background 0.3s ease;
+            width: 100%;          
+          
+        
+        }
+
+        .genres a button:hover {
+            background-color: #5a2ea6;
+        }
+
+        /* Адаптивный дизайн */
+        @media (max-width: 768px) {
+            .song {
+                width: 100%;
+            }
+
+            .genres {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .genres a button {
+                flex-grow: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header с логотипом, навигацией и поисковой строкой -->
+<header>
+    <div class="hamburger" onclick="openSidebar()">&#9776;</div>
+    <h1>TuneWave</h1>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search...">
+        <button onclick="searchFunction()">
+            <img src="https://cdn-icons-png.flaticon.com/512/54/54481.png" alt="Search">
+        </button>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="Signup.html">Sign Up</a></li>
+            <li><a href="Login.html">Log In</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Сайдбар -->
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+    <a href="Index.html">Home</a>
+    <a href="Aboutus.html">About us</a>
+    <a href="Services.html">Services</a>
+    <a href="history.html">History</a>
+    <a href="Playlist.html">Playlist</a>
+    <a href="Support.html">Support</a>
+    <a href="Rock.html">Rock</a>
+    <a href="Pop.html">Pop</a>
+    <a href="Hip.html">Hip Hop / Rap</a>
+    <a href="Electronic.html">Electronic</a>
+    <a href="Jazz.html">Jazz</a>
+    <a href="Blues.html">Blues</a>
+    <a href="Country.html">Country</a>
+    <a href="Metal.html">Metal</a>
+    <a href="Classical.html">Classical</a>
+    <a href="Reggae.html">Reggae</a>
+    <a href="Soul.html">Soul</a>
+    <a href="RB.html">R&B</a>
+    <a href="Folk.html">Folk</a>
+    <a href="Punk.html">Punk</a>
+    <a href="Latin.html">Latin</a>
+    <a href="World.html">World Music</a>
+    <a href="Indie.html">Indie</a>
+    <a href="Gospel.html">Gospel</a>
+    <a href="Experimental.html">Experimental</a>
+
+</div>
+
+<script>
+    function openSidebar() {
+        document.getElementById("mySidebar").style.width = "250px";
+    }
+
+    function closeSidebar() {
+        document.getElementById("mySidebar").style.width = "0";
+    }
+
+    // Функция для отметки "Нравится"
+    function likeSong(songTitle) {
+        alert(`${songTitle} добавлена в понравившиеся!`);
+    }
+
+    // Функция для сохранения трека
+    function saveSong(songTitle) {
+        alert(`${songTitle} сохранена!`);
+    }
+
+
+    
+</script>
+
+
+ <!-- Контент с музыкальными треками -->
+ <div class="content">
+    <!-- Блоки с 12 треками -->
+    <div class="song">
+        <div class="song-info">
+            <p>AC/DC - Back In Black</p>
+            <audio controls>
+                <source src="music/acdc-back-in-black.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('AC/DC - Back In Black')">❤ Нравится</button>
+            <button class="save-button" onclick="saveSong('AC/DC - Back In Black')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Queen - Bohemian Rhapsody</p>
+            <audio controls>
+                <source src="music/queen-bohemian-rhapsody.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Queen - Bohemian Rhapsody')">❤ Нравится</button>
+            <button class="save-button" onclick="saveSong('Queen - Bohemian Rhapsody')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Led Zeppelin - Stairway to Heaven</p>
+            <audio controls>
+                <source src="music/led-zeppelin-stairway-to-heaven.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Led Zeppelin - Stairway to Heaven')">❤ Нравится</button>
+            <button class="save-button" onclick="saveSong('Led Zeppelin - Stairway to Heaven')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>The Beatles - Let It Be</p>
+            <audio controls>
+                <source src="music/the-beatles-let-it-be.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('The Beatles - Let It Be')">❤ Нравится</button>
+            <button class="save-button" onclick="saveSong('The Beatles - Let It Be')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Michael Jackson - Billie Jean</p>
+            <audio controls>
+                <source src="music/michael-jackson-billie-jean.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Michael Jackson - Billie Jean')">❤ Нравится</button>
+            <button class="save-button" onclick="saveSong('Michael Jackson - Billie Jean')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Pink Floyd - Comfortably Numb</p>
+            <audio controls>
+                <source src="music/pink-floyd-comfortably-numb.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Pink Floyd - Comfortably Numb')">❤ Нравится</button>
+            <button class="save-button" onclick="saveSong('Pink Floyd - Comfortably Numb')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Metallica - Enter Sandman</p>
+            <audio controls>
+                <source src="music/metallica-enter-sandman.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Metallica - Enter Sandman')">❤ Нравится</button>
+            <button class="save-button" onclick="saveSong('Metallica - Enter Sandman')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Elvis Presley - Suspicious Minds</p>
+            <audio controls>
+                <source src="music/elvis-presley-suspicious-minds.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Elvis Presley - Suspicious Minds')">❤ Нравится</button>
+            <button class="save-button" onclick="saveSong('Elvis Presley - Suspicious Minds')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>David Bowie - Space Oddity</p>
+            <audio controls>
+                <source src="music/david-bowie-space-oddity.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('David Bowie - Space Oddity')">❤ Нравится</button>
+            <button class="save-button" onclick="saveSong('David Bowie - Space Oddity')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>U2 - With or Without You</p>
+            <audio controls>
+                <source src="music/u2-with-or-without-you.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('U2 - With or Without You')">❤ Нравится</button>
+            <button class="save-button" onclick="saveSong('U2 - With or Without You')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>The Rolling Stones - Paint It Black</p>
+            <audio controls>
+                <source src="music/rolling-stones-paint-it-black.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('The Rolling Stones - Paint It Black')">❤ Нравится</button>
+            <button class="save-button" onclick="saveSong('The Rolling Stones - Paint It Black')">💾 Save</button>
+        </div>
+    </div>
+
+    <div class="song">
+        <div class="song-info">
+            <p>Nirvana - Smells Like Teen Spirit</p>
+            <audio controls>
+                <source src="music/nirvana-smells-like-teen-spirit.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="like-container">
+            <button class="like-button" onclick="likeSong('Nirvana - Smells Like Teen Spirit')">❤ Нравится</button>
+            <button class="save-button" onclick="saveSong('Nirvana - Smells Like Teen Spirit')">💾 Save</button>
+        </div>
+    </div>
+</div>
+
+</div>
+</body>
+</html>
